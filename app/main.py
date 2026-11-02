@@ -25,3 +25,16 @@ app.include_router(campaign.router, prefix=settings.API_V1_STR)
 @app.get("/health", tags=["Health"])
 async def health_check():
     return {"status": "healthy", "environment": settings.ENVIRONMENT}
+
+# Determine default port and base URL (defaulting to port 8000 if not in .env)
+HOST = getattr(settings, "HOST", "http://localhost:8000")
+
+print("-" * 60)
+print(f"Server Title:    {settings.PROJECT_NAME}")
+print(f"Environment:     {settings.ENVIRONMENT}")
+print(f"Health Check:    {HOST}/health")
+print(f"Interactive Docs:{HOST}{settings.API_V1_STR}/docs")
+print(f"Campaign API:    {HOST}{settings.API_V1_STR}/campaign/orchestrate")
+print(f"Allowed Origins: {settings.ALLOWED_ORIGINS}")
+print(f"Gemini Key Set:  {'Yes' if settings.GEMINI_API_KEY else 'No (Using Template Fallback)'}")
+print("-" * 60)
